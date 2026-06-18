@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repairs - Mahalaxmi Mobile Center Admin</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="../assets/logo.png" alt="Mahalaxmi Mobile Center">
+      <div>
+        <span>Mahalaxmi Mobile Center</span>
+        <small>Admin Panel</small>
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <a href="dashboard.html" class="sidebar-link" data-roles="superadmin admin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="products.html" class="sidebar-link" data-roles="superadmin admin product">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Mobile Devices
+      </a>
+      <a href="repairs.html" class="sidebar-link active" data-roles="superadmin admin repair">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Repairs
+      </a>
+      <a href="users.html" class="sidebar-link" data-roles="superadmin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Users
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="sidebar-link" onclick="clearCache()" title="Refresh data from Google Sheets">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Refresh Data
+      </button>
+      <button class="sidebar-link" onclick="handleLogout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign out
+      </button>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h1>Repairs</h1>
+      <div class="topbar-right">
+        <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <div class="admin-avatar" id="adminAvatar">A</div>
+      </div>
+    </header>
+    <div class="content" id="repairsPage">
+      <div class="card">
+        <div class="card-header">
+          <span>All Repairs</span>
+          <div class="card-actions">
+            <input type="text" id="searchInput" placeholder="Search phone..." class="search-input" oninput="filterRepairs()">
+            <button class="btn btn-primary" onclick="openRepairModal()">+ Add Repair</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Phone</th>
+                <th>Customer</th>
+                <th>Device</th>
+                <th>Issue</th>
+                <th>Cost</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="repairsTableBody">
+              <tr><td><div class="skeleton" style="height:14px;width:70%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:50%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td></tr>
+              <tr><td><div class="skeleton" style="height:14px;width:70%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:50%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td></tr>
+              <tr><td><div class="skeleton" style="height:14px;width:70%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:50%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td></tr>
+              <tr><td><div class="skeleton" style="height:14px;width:70%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:50%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td></tr>
+              <tr><td><div class="skeleton" style="height:14px;width:70%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:50%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:40%"></div></td><td><div class="skeleton" style="height:14px;width:60%"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="repairModalOverlay" onclick="closeRepairModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span id="repairModalTitle">Add Repair</span>
+        <button class="modal-close" onclick="closeRepairModal()">&times;</button>
+      </div>
+      <form id="repairForm" onsubmit="saveRepair(event)">
+        <input type="hidden" id="repairId">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone *</label>
+              <input type="tel" id="rPhone" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Customer *</label>
+              <input type="text" id="rCustomer" class="form-control" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Device *</label>
+              <input type="text" id="rDevice" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Cost</label>
+              <input type="number" id="rCost" class="form-control" step="0.01">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Issue *</label>
+            <input type="text" id="rIssue" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select id="rStatus" class="form-control">
+              <option>Pending</option>
+              <option>Diagnosing</option>
+              <option>Under Repair</option>
+              <option>Repaired</option>
+              <option>Delivered</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeRepairModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="repairSubmitBtn">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+  <script src="../sheets-api.js"></script>
+  <script src="js/admin-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "Mahalaxmi Mobile Center",
+  "short_name": "Mahalaxmi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "description": "Best Mobile Shop in Gaighat - New & Refurbished Phones, Repairs & Accessories",
+  "lang": "en-IN",
+  "icons": [
+    { "src": "assets/logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
