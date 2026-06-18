@@ -1,5 +1,7 @@
 var currentRole = null;
 
+if (sessionStorage.getItem('_admin_gate') !== '1') { document.body.innerHTML = ''; window.location.href = '/'; }
+
 document.addEventListener('DOMContentLoaded', function () {
   loadTheme();
   var path = window.location.pathname;
