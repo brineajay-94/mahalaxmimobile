@@ -6,13 +6,27 @@
   <title>Redirecting...</title>
   <link rel="icon" type="image/png" href="assets/logo.png">
   <style>
-    body { margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #f0f4f8; font-family: Calibri, Arial, sans-serif; }
-    .loader { width: 36px; height: 36px; border: 3px solid #cbd5e1; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    body { margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #0a0f1d; font-family: Calibri, Arial, sans-serif; color: #e2e8f0; }
+    .loader { width: 36px; height: 36px; border: 3px solid #334155; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .error { text-align: center; padding: 2rem; }
+    .error h1 { font-size: 1.5rem; margin-bottom: .5rem; }
+    .error p { color: #94a3b8; font-size: .95rem; }
   </style>
 </head>
 <body>
-  <div class="loader"></div>
-  <script>sessionStorage.setItem('_admin_gate', '1'); window.location.href = 'admin/login.html';</script>
+  <div id="content"></div>
+  <script>
+    (function () {
+      var expected = '/backend-username:Epuser.password:user12';
+      if (window.location.pathname === expected) {
+        sessionStorage.setItem('_admin_gate', '1');
+        document.getElementById('content').innerHTML = '<div class="loader"></div>';
+        window.location.href = 'admin/login.html';
+      } else {
+        document.getElementById('content').innerHTML = '<div class="error"><h1>Access Denied</h1><p>Invalid backend URL. You do not have permission to access this area.</p></div>';
+      }
+    })();
+  </script>
 </body>
 </html>
